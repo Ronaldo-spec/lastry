@@ -135,8 +135,6 @@ services:
     image: bitnami/airflow:2
     ports:
       - "8080:8080"
-    env_file:
-      - openlineage.env
     environment:
       - AIRFLOW_USERNAME=airflow
       - AIRFLOW_PASSWORD=airflow
@@ -155,14 +153,9 @@ services:
       - ./logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
       - "//var/run/docker.sock:/var/run/docker.sock"
-      - type: bind
-        source: ./requirements.txt
-        target: /bitnami/python/requirements.txt
 
   airflow_scheduler:
     image: bitnami/airflow-scheduler:2
-    env_file:
-      - openlineage.env
     environment:
       - AIRFLOW_FERNET_KEY=Z2uDm0ZL60fXNkEXG8LW99Ki2zf8wkmIltaTz1iQPDU=
       - AIRFLOW_DATABASE_HOST=postgres
@@ -176,14 +169,9 @@ services:
     volumes:
       - ./dags:/opt/bitnami/airflow/dags
       - "//var/run/docker.sock:/var/run/docker.sock"
-      - type: bind
-        source: ./requirements.txt
-        target: /bitnami/python/requirements.txt
 
   airflow_worker:
     image: bitnami/airflow-worker:2
-    env_file:
-      - openlineage.env
     environment:
       - AIRFLOW_FERNET_KEY=Z2uDm0ZL60fXNkEXG8LW99Ki2zf8wkmIltaTz1iQPDU=
       - AIRFLOW_DATABASE_HOST=postgres
@@ -197,9 +185,6 @@ services:
     volumes:
       - ./dags:/opt/bitnami/airflow/dags
       - "//var/run/docker.sock:/var/run/docker.sock"
-      - type: bind
-        source: ./requirements.txt
-        target: /bitnami/python/requirements.txt
 
 networks:
   app_net:
